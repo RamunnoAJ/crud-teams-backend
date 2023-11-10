@@ -1,0 +1,19 @@
+{
+  "env": {
+    "node": true,
+    "commonjs": true,
+    "jest": true
+  },
+  "extends": ["standard", "prettier", "plugin:jest/recommended"],
+  "plugins": ["jest", "prettier"],
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "modules": true
+    }
+  },
+  "rules": {
+    "prettier/prettier": "error"
+  }
+}

@@ -14,13 +14,14 @@ const apiTeamBackup = JSON.parse(fs.readFileSync(teamsBackupDirectory, 'utf-8'))
 const teamsDB = apiTeam.map(team => teamsMapper(team))
 const teamsDBBackup = apiTeamBackup.map(team => teamsMapper(team))
 
-function getTeams() {
-  return teamsDB
+/**
  * @param {import('../entities/teams.js').Team[]} teams
+ * @returns {import('../entities/teams.js').Team[]}
+ */
+function getTeams(teams = teamsDB) {
+  return teams
 }
 
-function resetTeams() {
-  return fs.writeFileSync(teamsDirectory, JSON.stringify(teamsDBBackup))
 /**
  * @param {number} id
  * @param {import('../entities/teams.js').Team[]} teams
@@ -38,3 +39,11 @@ function getTeamByID(id, teams = teamsDB) {
   }
 }
 
+/**
+ * @param {import('../entities/teams.js').Team[]} teams
+ */
+function resetTeams(teams = teamsDBBackup) {
+  return fs.writeFileSync(teamsDirectory, JSON.stringify(teams))
+}
+
+module.exports = { getTeams, resetTeams, getTeamByID }

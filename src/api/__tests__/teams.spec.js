@@ -1,4 +1,4 @@
-const { getTeamByID } = require('../teams.js')
+const { getTeamByID, getTeams } = require('../teams.js')
 
 describe('getTeamByID', () => {
   const teams = [{ id: 1, name: 'Football team', country: 'Argentina' }]
@@ -17,5 +17,19 @@ describe('getTeamByID', () => {
 
   it('should throw an error if id is not a number', () => {
     expect(() => getTeamByID('1', teams)).toThrow('Invalid id')
+  })
+})
+
+describe('getTeams', () => {
+  const teams = [{ id: 1, name: 'Football team', country: 'Argentina' }]
+
+  it('should return an array of teams', () => {
+    expect(getTeams(teams)).toEqual([
+      {
+        id: 1,
+        name: 'Football team',
+        country: 'Argentina',
+      },
+    ])
   })
 })

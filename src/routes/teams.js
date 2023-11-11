@@ -1,6 +1,6 @@
 const Router = require('express').Router
 const teamRouter = new Router()
-const { getTeams, resetTeams } = require('../api/teams.js')
+const { getTeams, resetTeams, getTeamByID } = require('../api/teams.js')
 
 teamRouter.get('/teams', (_, res) => {
   try {
@@ -8,6 +8,17 @@ teamRouter.get('/teams', (_, res) => {
     res.send(teams)
   } catch (error) {
     res.send(500).send(error)
+  }
+})
+
+teamRouter.get('/teams/:id', (req, res) => {
+  const id = Number(req.params.id)
+
+  try {
+    const team = getTeamByID(id)
+    res.send(team)
+  } catch (error) {
+    res.status(404).send(error.message)
   }
 })
 
@@ -30,3 +41,6 @@ teamRouter.use((_, res) => {
 })
 
 module.exports = teamRouter
+function newFunction() {
+  return '../api/teams.js'
+}

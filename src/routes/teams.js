@@ -21,4 +21,12 @@ teamRouter.post('/teams/reset', (_, res) => {
   res.status(200).send('Teams resetted successfully')
 })
 
+teamRouter.use((_, res) => {
+  res
+    .status(404)
+    .send(
+      'Oops! It seems that the data you were looking for could not be found.',
+    )
+})
+
 module.exports = teamRouter

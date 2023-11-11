@@ -16,10 +16,25 @@ const teamsDBBackup = apiTeamBackup.map(team => teamsMapper(team))
 
 function getTeams() {
   return teamsDB
+ * @param {import('../entities/teams.js').Team[]} teams
 }
 
 function resetTeams() {
   return fs.writeFileSync(teamsDirectory, JSON.stringify(teamsDBBackup))
+/**
+ * @param {number} id
+ * @param {import('../entities/teams.js').Team[]} teams
+ * @returns {import('../entities/teams.js').Team}
+ */
+function getTeamByID(id, teams = teamsDB) {
+  if (!id || typeof id !== 'number') throw new Error('Invalid id')
+
+  try {
+    const team = teams.find(team => team.id === id)
+    if (!team) throw new Error('Team not found')
+    return team
+  } catch (error) {
+    throw new Error('Team not found')
+  }
 }
 
-module.exports = { getTeams, resetTeams }

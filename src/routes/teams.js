@@ -98,6 +98,10 @@ teamRouter.patch('/teams/:id', upload.single('image'), (req, res) => {
   }
 })
 
+teamRouter.get('/public/uploads/:filename', (req, res) => {
+  res.sendFile(path.join(process.cwd(), '/public/uploads', req.params.filename))
+})
+
 teamRouter.use((_, res) => {
   res
     .status(404)

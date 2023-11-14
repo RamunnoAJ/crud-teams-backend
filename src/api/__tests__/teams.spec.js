@@ -1,4 +1,4 @@
-const { getTeamByID, getTeams } = require('../teams.js')
+const { getTeamByID, getTeams, deleteTeamByID } = require('../teams.js')
 
 describe('getTeamByID', () => {
   const teams = [{ id: 1, name: 'Football team', country: 'Argentina' }]
@@ -31,5 +31,17 @@ describe('getTeams', () => {
         country: 'Argentina',
       },
     ])
+  })
+})
+
+describe('deleteTeamByID', () => {
+  const teams = [{ id: 1, name: 'Football team', country: 'Argentina' }]
+
+  it('should throw an error if the id is not a number', () => {
+    expect(() => deleteTeamByID('asd', teams, jest.fn())).toThrow('Invalid id')
+  })
+
+  it('should throw an error if the team is not found', () => {
+    expect(() => deleteTeamByID(1, teams, jest.fn())).toThrow('Team not found')
   })
 })

@@ -1,6 +1,11 @@
 const Router = require('express').Router
 const teamRouter = new Router()
-const { getTeams, resetTeams, getTeamByID } = require('../api/teams.js')
+const {
+  getTeams,
+  resetTeams,
+  getTeamByID,
+  deleteTeamByID,
+} = require('../api/teams.js')
 
 teamRouter.get('/teams', (_, res) => {
   try {
@@ -32,6 +37,16 @@ teamRouter.post('/teams/reset', (_, res) => {
   res.status(200).send('Teams resetted successfully')
 })
 
+teamRouter.delete('/teams/:id', (req, res) => {
+  const id = Number(req.params.id)
+
+  try {
+    deleteTeamByID(id)
+  } catch (error) {
+    res.status(500).send(error)
+  }
+})
+
 teamRouter.use((_, res) => {
   res
     .status(404)
@@ -41,6 +56,3 @@ teamRouter.use((_, res) => {
 })
 
 module.exports = teamRouter
-function newFunction() {
-  return '../api/teams.js'
-}

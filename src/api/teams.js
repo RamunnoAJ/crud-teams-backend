@@ -40,10 +40,29 @@ function getTeamByID(id, teams = teamsDB) {
 }
 
 /**
+ * @param {number} id
+ * @param {import('../entities/teams.js').Team[]} teams
+ */
+function deleteTeamByID(id, teams = teamsDB) {
+  if (!id || typeof id !== 'number') throw new Error('Invalid id')
+
+  try {
+    const team = getTeamByID(id)
+    const index = teams.indexOf(team)
+    if (index === -1) throw new Error('Team not found')
+
+    const newTeams = teams.filter(team => team.id !== id)
+    return fs.writeFileSync(teamsDirectory, JSON.stringify(newTeams))
+  } catch (error) {
+    throw new Error('Team not found')
+  }
+}
+
+/**
  * @param {import('../entities/teams.js').Team[]} teams
  */
 function resetTeams(teams = teamsDBBackup) {
   return fs.writeFileSync(teamsDirectory, JSON.stringify(teams))
 }
 
-module.exports = { getTeams, resetTeams, getTeamByID }
+module.exports = { getTeams, resetTeams, getTeamByID, deleteTeamByID }

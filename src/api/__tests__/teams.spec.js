@@ -3,7 +3,9 @@ const {
   getTeams,
   deleteTeamByID,
   createTeam,
+  updateTeam,
 } = require('../teams.js')
+const Team = require('../../entities/team.js')
 
 describe('getTeamByID', () => {
   const teams = [{ id: 1, name: 'Football team', country: 'Argentina' }]
@@ -54,5 +56,20 @@ describe('deleteTeamByID', () => {
 describe('createTeam', () => {
   it('should throw an error if the team is not an instance of Team', () => {
     expect(() => createTeam({})).toThrow('Invalid team')
+  })
+})
+
+describe('updateTeam', () => {
+  it('should throw an error if the team is not an instance of Team', () => {
+    expect(() => updateTeam(1, {})).toThrow('Invalid team')
+  })
+
+  it('should throw an error if the id is not a number', () => {
+    expect(() => updateTeam('1', {})).toThrow('Invalid id')
+  })
+
+  it('should throw an error if the team is not found', () => {
+    const teams = [{ id: 1, name: 'Football team', country: 'Argentina' }]
+    expect(() => updateTeam(2, new Team(), teams)).toThrow('Team not updated')
   })
 })

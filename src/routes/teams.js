@@ -8,6 +8,7 @@ const {
   getTeamByID,
   deleteTeamByID,
   createTeam,
+  updateTeam,
 } = require('../api/teams.js')
 const teamsMapper = require('../mappers/teamsMapper.js')
 
@@ -75,6 +76,23 @@ teamRouter.post('/teams/create', upload.single('image'), (req, res) => {
   try {
     createTeam(team)
     res.status(201).send(team)
+  } catch (error) {
+    res.status(500).send(error)
+  }
+})
+
+teamRouter.patch('/teams/:id', upload.single('image'), (req, res) => {
+  if (req.file !== undefined) {
+    req.body.crestUrl = '/' + req.file.path
+  }
+
+  const id = Number(req.params.id)
+  const teamUpdated = teamsMapper(req.body)
+  if (!teamUpdated) return res.status(400).send('Invalid team')
+
+  try {
+    updateTeam(id, teamUpdated)
+    res.status(200).send('Team updated successfully')
   } catch (error) {
     res.status(500).send(error)
   }

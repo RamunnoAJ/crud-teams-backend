@@ -77,6 +77,44 @@ function createTeam(team, teams = teamsDB) {
 }
 
 /**
+ * @param {number} id
+ * @param {import('../entities/teams.js').Team} newTeam
+ * @param {import('../entities/teams.js').Team[]} teams
+ */
+function updateTeam(id, newTeam, teams = teamsDB) {
+  if (!id || typeof id !== 'number') throw new Error('Invalid id')
+  if (!newTeam || !(newTeam instanceof Team)) throw new Error('Invalid team')
+
+  try {
+    const team = getTeamByID(id)
+    const index = teams.indexOf(team)
+    newTeam.lastUpdated = new Date().toISOString()
+
+    team.id = newTeam.id || team.id
+    team.name = newTeam.name || team.name
+    team.country = newTeam.country || team.country
+    team.shortName = newTeam.shortName || team.shortName
+    team.tla = newTeam.tla || team.tla
+    team.crestUrl = newTeam.crestUrl || team.crestUrl
+    team.address = newTeam.address || team.address
+    team.phone = newTeam.phone || team.phone
+    team.website = newTeam.website || team.website
+    team.email = newTeam.email || team.email
+    team.founded = newTeam.founded || team.founded
+    team.clubColors = newTeam.clubColors || team.clubColors
+    team.venue = newTeam.venue || team.venue
+    team.lastUpdated = newTeam.lastUpdated || team.lastUpdated
+
+    const newTeams = [...teams]
+    newTeams[index] = team
+
+    return fs.writeFileSync(teamsDirectory, JSON.stringify(newTeams))
+  } catch (error) {
+    throw new Error('Team not updated')
+  }
+}
+
+/**
  * @param {import('../entities/teams.js').Team[]} teams
  */
 function resetTeams(teams = teamsDBBackup) {
@@ -97,4 +135,5 @@ module.exports = {
   getTeamByID,
   deleteTeamByID,
   createTeam,
+  updateTeam,
 }

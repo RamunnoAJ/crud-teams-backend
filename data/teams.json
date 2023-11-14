@@ -318,5 +318,22 @@
     "clubColors": "Red / Black",
     "venue": "Vitality Stadium",
     "lastUpdated": "2020-05-14T02:43:14Z"
+  },
+  {
+    "id": 1045,
+    "name": "equipazo",
+    "country": "Argentina",
+    "shortName": "equipin",
+    "tla": "EQP",
+    "crestUrl": "/public/uploads/1699928029431.png",
+    "address": "guiraldes 1223",
+    "phone": "+54 16216224",
+    "website": "www.test.com",
+    "email": "test@gmail.com",
+    "founded": "2023",
+    "clubColors": "red and white",
+    "venue": "maracana",
+    "lastUpdated": "2023-11-14T02:13:49.442Z"
   }
 ]
+

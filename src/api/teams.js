@@ -1,6 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 const teamsMapper = require('../mappers/teamsMapper.js')
+const Team = require('../entities/team.js')
 
 const teamsDirectory = path.join(__dirname, '../../data/teams.json')
 const teamsBackupDirectory = path.join(
@@ -59,10 +60,41 @@ function deleteTeamByID(id, teams = teamsDB) {
 }
 
 /**
+ * @param {import('../entities/teams.js').Team} team
+ * @param {import('../entities/teams.js').Team[]} teams
+ */
+function createTeam(team, teams = teamsDB) {
+  if (!team || !(team instanceof Team)) throw new Error('Invalid team')
+
+  try {
+    team.lastUpdated = new Date().toISOString()
+    team.id = getLastTeam(teams).id + 1
+    const newTeams = [...teams, team]
+    return fs.writeFileSync(teamsDirectory, JSON.stringify(newTeams))
+  } catch (error) {
+    throw new Error('Team not created')
+  }
+}
+
+/**
  * @param {import('../entities/teams.js').Team[]} teams
  */
 function resetTeams(teams = teamsDBBackup) {
   return fs.writeFileSync(teamsDirectory, JSON.stringify(teams))
 }
 
-module.exports = { getTeams, resetTeams, getTeamByID, deleteTeamByID }
+/**
+ * @param {import('../entities/teams.js').Team[]} teams
+ * @returns {import('../entities/teams.js').Team}
+ */
+function getLastTeam(teams = teamsDB) {
+  return teams[teams.length - 1]
+}
+
+module.exports = {
+  getTeams,
+  resetTeams,
+  getTeamByID,
+  deleteTeamByID,
+  createTeam,
+}

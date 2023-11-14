@@ -1,12 +1,50 @@
 # CRUD TEAMS BACKEND
 
-This is a CRUD application for teams
-CRUD stands for:
+This is a CRUD application of soccer teams. The application has the following features
 
 - Create
 - Read
 - Update
 - Delete
+
+## TECHNOLOGIES
+
+- Node.js
+- Express
+- Jest
+
+## ENDPOINTS
+
+- GET
+  - `/api/teams` => get all teams
+  - `/api/teams/:id` => get a team
+  - `/api/public/uploads/:filename` => get a file
+- POST
+  - `/api/teams` => create a team
+  - `/api/reset` => reset all teams
+- PATCH
+  - `/api/teams/:id` => update a team
+- DELETE
+  - `/api/teams/:id` => delete a team
+
+## PROJECT STRUCTURE
+
+- `data` => Directory that contains the data
+  - `teams.json`
+  - `teams-backup.json`
+- `src` => Directory that contains the logic of the server
+  - `app.js` => server
+  - `routes` => handling of the http methods
+    - `teams.js`
+  - `api` => Directory that contains the logic of the api
+    - `teams.js`
+  - `entities` => Entities of the database
+    - `teams.js`
+  - `mappers` => Mappers to match data with entities
+    - `teams.js`
+- `public` => Directory that contains the static files
+  - `uploads` => Directory that contains the uploaded files
+    - `:filename`
 
 ## Run locally
 
@@ -16,7 +54,7 @@ CRUD stands for:
  git clone https://github.com/RamunnoAJ/crud-teams-backend.git
 ```
 
-2. CD into the project's directory
+2. Move to the created directory
 
 ```bash
  cd crud-teams-backend

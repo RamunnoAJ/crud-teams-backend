@@ -1,4 +1,9 @@
-const { getTeamByID, getTeams, deleteTeamByID } = require('../teams.js')
+const {
+  getTeamByID,
+  getTeams,
+  deleteTeamByID,
+  createTeam,
+} = require('../teams.js')
 
 describe('getTeamByID', () => {
   const teams = [{ id: 1, name: 'Football team', country: 'Argentina' }]
@@ -43,5 +48,11 @@ describe('deleteTeamByID', () => {
 
   it('should throw an error if the team is not found', () => {
     expect(() => deleteTeamByID(1, teams, jest.fn())).toThrow('Team not found')
+  })
+})
+
+describe('createTeam', () => {
+  it('should throw an error if the team is not an instance of Team', () => {
+    expect(() => createTeam({})).toThrow('Invalid team')
   })
 })

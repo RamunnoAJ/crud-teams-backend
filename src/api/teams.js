@@ -108,7 +108,7 @@ function updateTeam(id, newTeam) {
   try {
     const team = getTeam(id)
     const teams = getTeams()
-    const index = teams.indexOf(team)
+    const index = teams.findIndex(team => team.id === id)
     newTeam.lastUpdated = new Date().toISOString()
 
     team.id = newTeam.id || team.id
@@ -141,6 +141,10 @@ function updateTeam(id, newTeam) {
 function deleteTeam(id) {
   if (!id || typeof id !== 'number') {
     throw new Error('Invalid id')
+  }
+  const team = getTeam(id)
+  if (!team) {
+    throw new Error(`Team with id:${id} not found`)
   }
 
   try {

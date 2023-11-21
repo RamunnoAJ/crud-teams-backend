@@ -5,8 +5,8 @@ const teamRouter = new Router()
 const {
   getTeams,
   resetTeams,
-  getTeamByID,
-  deleteTeamByID,
+  getTeam,
+  deleteTeam,
   createTeam,
   updateTeam,
 } = require('../api/teams.js')
@@ -37,7 +37,7 @@ teamRouter.get('/teams/:id', (req, res) => {
   const id = Number(req.params.id)
 
   try {
-    const team = getTeamByID(id)
+    const team = getTeam(id)
     res.send(team)
   } catch (error) {
     res.status(404).send(error.message)
@@ -59,7 +59,7 @@ teamRouter.delete('/teams/:id', (req, res) => {
   const id = Number(req.params.id)
 
   try {
-    deleteTeamByID(id)
+    deleteTeam(id)
     res.status(204).send({ status: 'OK', message: 'Team deleted successfully' })
   } catch (error) {
     res.status(500).send(error)

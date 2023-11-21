@@ -27,7 +27,7 @@ const upload = multer({ storage })
 teamRouter.get('/teams', (_, res) => {
   try {
     const teams = getTeams()
-    res.send(teams)
+    res.status(200).send(teams)
   } catch (error) {
     res.send(500).send(error)
   }

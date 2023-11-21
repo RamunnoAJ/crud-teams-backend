@@ -52,7 +52,7 @@ teamRouter.post('/teams/reset', (_, res) => {
     res.send(400).send(error)
   }
 
-  res.status(200).send('Teams resetted successfully')
+  res.status(205).send({ status: 'OK', message: 'Teams resetted successfully' })
 })
 
 teamRouter.delete('/teams/:id', (req, res) => {
@@ -60,7 +60,7 @@ teamRouter.delete('/teams/:id', (req, res) => {
 
   try {
     deleteTeamByID(id)
-    res.status(200).send('Team deleted successfully')
+    res.status(204).send({ status: 'OK', message: 'Team deleted successfully' })
   } catch (error) {
     res.status(500).send(error)
   }

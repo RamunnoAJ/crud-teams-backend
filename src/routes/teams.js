@@ -60,7 +60,7 @@ teamRouter.delete('/teams/:id', (req, res) => {
 
   try {
     deleteTeam(id)
-    res.status(204).send({ status: 'OK', message: 'Team deleted successfully' })
+    res.status(200).send({ status: 'OK', message: 'Team deleted successfully' })
   } catch (error) {
     res.status(500).send(error)
   }

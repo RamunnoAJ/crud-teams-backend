@@ -22,7 +22,7 @@ module.exports = function teamsMapper(apiData) {
   } = apiData
 
   return new Team(
-    id,
+    Number(id),
     name,
     country,
     shortName,
@@ -32,7 +32,7 @@ module.exports = function teamsMapper(apiData) {
     phone,
     website,
     email,
-    founded,
+    Number(founded),
     clubColors,
     venue,
     lastUpdated,

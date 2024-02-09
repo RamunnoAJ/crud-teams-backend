@@ -14,4 +14,4 @@ app.use(express.urlencoded({ extended: true }))
 
 app.use('/api', teamsRouter)
 
-app.listen(PORT)
+app.listen(PORT, () => console.log(`Listening on port ${PORT}`))

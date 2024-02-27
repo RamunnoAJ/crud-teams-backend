@@ -65,4 +65,19 @@ module.exports = class ClubRepository extends AbstractClubRepository {
 
     return true
   }
+
+  /**
+   * @param {number} id
+   * @returns {Promise<Club>}
+   */
+  async getById(id) {
+    const clubs = await this.getData()
+    const club = clubs.find(tmpClub => tmpClub.id === id)
+
+    if (!club) {
+      throw new ClubNotFoundError()
+    }
+
+    return new Club(club)
+  }
 }

@@ -23,7 +23,7 @@ module.exports = class ClubRepository extends AbstractClubRepository {
    * @returns {Club}
    */
   async save(club) {
-    const clubs = await this.getData()
+    const clubs = this.getData()
     let clubToSave
 
     if (club.id) {
@@ -57,7 +57,7 @@ module.exports = class ClubRepository extends AbstractClubRepository {
       throw new ClubIdNotDefinedError()
     }
 
-    const clubs = await this.getData()
+    const clubs = this.getData()
     const clubIndex = clubs.findIndex(tmpClub => tmpClub.id === club.id)
     clubs.splice(clubIndex, 1)
 
@@ -71,7 +71,7 @@ module.exports = class ClubRepository extends AbstractClubRepository {
    * @returns {Promise<Club>}
    */
   async getById(id) {
-    const clubs = await this.getData()
+    const clubs = this.getData()
     const club = clubs.find(tmpClub => tmpClub.id === id)
 
     if (!club) {
@@ -85,7 +85,27 @@ module.exports = class ClubRepository extends AbstractClubRepository {
    * @returns {Promise<Club[]>}
    */
   async getAll() {
-    const clubs = await this.getData()
+    const clubs = this.getData()
     return clubs.map(club => new Club(club))
+  }
+
+  /**
+   * @returns {Club[]}
+   */
+  getData() {
+    const content = this.fileSystem.readFileSync(this.dbFilePath, 'utf8')
+    let parsedContent
+
+    try {
+      parsedContent = JSON.parse(content)
+    } catch (e) {
+      parsedContent = []
+    }
+
+    return parsedContent
+  }
+
+  saveData(content) {
+    this.fileSystem.writeFileSync(this.dbFilePath, JSON.stringify(content))
   }
 }

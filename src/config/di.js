@@ -1,5 +1,6 @@
 const { default: DIContainer, factory } = require('rsdi')
 const path = require('path')
+const uuid = require('uuid')
 const fs = require('fs')
 const multer = require('multer')
 
@@ -9,6 +10,10 @@ function configureMainJSONDatabase() {
 
 function configureBackupJSONDatabase() {
   return process.env.JSON_DB_BACKUP_PATH
+}
+
+function configureUuid() {
+  return uuid.v4
 }
 
 function configureMulter() {
@@ -29,6 +34,7 @@ function configureMulter() {
 function addCommonDefinitions(container) {
   container.add({
     fs: factory(() => fs),
+    uuid: factory(configureUuid),
     multer: factory(configureMulter),
     JSONDatabase: factory(configureMainJSONDatabase),
     JSONDatabaseBackup: factory(configureBackupJSONDatabase),

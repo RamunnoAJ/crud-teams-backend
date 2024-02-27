@@ -80,4 +80,12 @@ module.exports = class ClubRepository extends AbstractClubRepository {
 
     return new Club(club)
   }
+
+  /**
+   * @returns {Promise<Club[]>}
+   */
+  async getAll() {
+    const clubs = await this.getData()
+    return clubs.map(club => new Club(club))
+  }
 }

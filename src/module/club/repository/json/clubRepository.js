@@ -1,6 +1,7 @@
 const AbstractClubRepository = require('../abstractClubRepository')
 const Club = require('../../entity/club')
 const ClubNotFoundError = require('./error/clubNotFoundError')
+const ClubIdNotDefinedError = require('./error/clubIdNotDefinedError')
 
 module.exports = class ClubRepository extends AbstractClubRepository {
   /**
@@ -22,7 +23,7 @@ module.exports = class ClubRepository extends AbstractClubRepository {
    * @returns {Club}
    */
   async save(club) {
-    const clubs = await this.getAll()
+    const clubs = await this.getData()
     let clubToSave
 
     if (club.id) {
@@ -45,5 +46,23 @@ module.exports = class ClubRepository extends AbstractClubRepository {
       this.saveData(clubs)
       return new Club(clubToSave)
     }
+  }
+
+  /**
+   * @param {Club} club
+   * @returns {boolean}
+   */
+  async delete(club) {
+    if (!club || !club.id) {
+      throw new ClubIdNotDefinedError()
+    }
+
+    const clubs = await this.getData()
+    const clubIndex = clubs.findIndex(tmpClub => tmpClub.id === club.id)
+    clubs.splice(clubIndex, 1)
+
+    this.saveData(clubs)
+
+    return true
   }
 }

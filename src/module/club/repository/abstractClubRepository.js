@@ -1,6 +1,8 @@
 /* eslint-disable no-unused-vars */
 const AbstractClubRepositoryError = require('./error/abstractClubRepositoryError')
 const Club = require('../entity/club')
+const ClubIdNotDefinedError = require('./error/clubIdNotDefinedError')
+const ClubNotFoundError = require('./error/clubNotFoundError')
 
 module.exports = class AbstractClubRepository {
   constructor() {
@@ -13,18 +15,47 @@ module.exports = class AbstractClubRepository {
 
   /**
    * @param {Club} club
-   * @returns {Club}
+   * @returns {Promise<Club>}
    */
-  async save(club) {}
+  async save(club) {
+    if (!club) {
+      throw new ClubNotFoundError()
+    }
 
-  /** @param {number} id */
-  async delete(id) {}
+    return await this.save(club)
+  }
 
   /**
    * @param {number} id
-   * @returns {Club} */
-  async getById(id) {}
+   * @returns {boolean}
+   */
+  async delete(id) {
+    if (!id) {
+      throw new ClubIdNotDefinedError()
+    }
 
-  /** @returns {Club[]} */
-  async getAll() {}
+    try {
+      await this.delete(id)
+    } catch (e) {
+      throw new ClubNotFoundError()
+    }
+
+    return true
+  }
+
+  /**
+   * @param {number} id
+   * @returns {Promise<Club>} */
+  async getById(id) {
+    if (!id) {
+      throw new ClubIdNotDefinedError()
+    }
+
+    return await this.getById(id)
+  }
+
+  /** @returns {Promise<Club[]>} */
+  async getAll() {
+    return await this.getAll()
+  }
 }

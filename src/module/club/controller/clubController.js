@@ -16,12 +16,13 @@ module.exports = class ClubController extends AbstractController {
     const ROUTE = this.ROUTE_BASE
 
     app.get(`${ROUTE}`, this.getAll.bind(this))
-    app.get(`${ROUTE}:id`, this.getById.bind(this))
+    app.get(`${ROUTE}/:id`, this.getById.bind(this))
     app.post(
       `${ROUTE}`,
       this.upploadMiddleware.single('image'),
       this.save.bind(this),
     )
+    app.delete(`${ROUTE}/:id`, this.delete.bind(this))
   }
 
   /**

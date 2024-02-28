@@ -1,13 +1,9 @@
 const fs = require('fs')
-const path = require('path')
 const teamsMapper = require('../mappers/teamsMapper.js')
 const Team = require('../entities/team.js')
 
-const teamsDirectory = path.join(__dirname, '../../data/teams.json')
-const teamsBackupDirectory = path.join(
-  __dirname,
-  '../../data/teams-backup.json',
-)
+const teamsDirectory = process.env.JSON_DB_PATH
+const teamsBackupDirectory = process.env.JSON_DB_BACKUP_PATH
 
 /**
  * @param {import('../entities/teams.js').Team[]} teams

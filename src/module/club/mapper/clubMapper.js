@@ -4,7 +4,7 @@ const Club = require('../entity/club')
  * @param {Object} apiData
  * @returns {Club}
  */
-module.exports = function fromDataToEntity(apiData) {
+function fromDataToEntity(apiData) {
   const {
     id,
     name,
@@ -38,4 +38,8 @@ module.exports = function fromDataToEntity(apiData) {
     venue,
     lastUpdated,
   )
+}
+
+module.exports = {
+  fromDataToEntity,
 }
